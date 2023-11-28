@@ -1,0 +1,23 @@
+image: jakzal/phpqa:php7.4
+
+stages:
+  - CodingStandards
+  - Deploy
+
+phpcs:
+  stage: CodingStandards
+  script:
+    - phpcs -v --standard=PSR12 --ignore=./src/Kernel.php ./src
+  allow_failure: false
+  tags:
+    - locator
+
+deploy_staging:
+  stage: Deploy
+  script:
+    - cd /root/family-locator-backend && git checkout main && git pull origin main && exit
+    - cd /root/family-locator-backend && make
+  only:
+    - main
+  tags:
+    - locator

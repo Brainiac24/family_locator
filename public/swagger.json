@@ -1,0 +1,321 @@
+{
+  "openapi" : "3.0.0",
+  "servers" : [ {
+    "url" : "http://178.62.39.234/api"
+  }, {
+    "url" : "http://127.0.0.1/api"
+  }, {
+    "url" : "https://virtserver.swaggerhub.com/BatItDaler/FamilyLocator/1.0.0"
+  } ],
+  "info" : {
+    "description" : "Documentation for Family locator",
+    "version" : "1.0.0",
+    "title" : "Simple Inventory API",
+    "contact" : {
+      "email" : "tursunov.d@batit.org"
+    },
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "tags" : [ {
+    "name" : "registration",
+    "description" : "Registration APIs"
+  }, {
+    "name" : "authentication",
+    "description" : "Authentication APIs"
+  }, {
+    "name" : "users",
+    "description" : "Users APIs"
+  }, {
+    "name" : "friends",
+    "description" : "Friends APIs"
+  }, {
+    "name" : "chats",
+    "description" : "Chats APIs"
+  } ],
+  "paths" : {
+    "/registration" : {
+      "post" : {
+        "tags" : [ "registration" ],
+        "summary" : "Registers new user",
+        "operationId" : "registration",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/registrationModel"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "response"
+          }
+        }
+      }
+    },
+    "/auth/phone" : {
+      "post" : {
+        "tags" : [ "authentication" ],
+        "summary" : "Authenticates user",
+        "operationId" : "authentication",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/authModel"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "response"
+          }
+        }
+      }
+    },
+    "/auth/check_code" : {
+      "post" : {
+        "tags" : [ "authentication" ],
+        "summary" : "Authenticates user",
+        "operationId" : "check_code",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/checkCodeModel"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "response"
+          }
+        }
+      }
+    },
+    "/users" : {
+      "post" : {
+        "tags" : [ "users" ],
+        "summary" : "Returns matched users list",
+        "operationId" : "users",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/usersModel"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "response"
+          }
+        }
+      }
+    },
+    "/users/profile" : {
+      "get" : {
+        "tags" : [ "users" ],
+        "summary" : "Returns user profile",
+        "operationId" : "userProfile",
+        "responses" : {
+          "200" : {
+            "description" : "response"
+          }
+        }
+      }
+    },
+    "/friends" : {
+      "get" : {
+        "tags" : [ "friends" ],
+        "summary" : "Returns friends list",
+        "operationId" : "friendsList",
+        "responses" : {
+          "200" : {
+            "description" : "response"
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "friends" ],
+        "summary" : "Adds users to friends list",
+        "operationId" : "friends",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/usersModel"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "response"
+          }
+        }
+      }
+    },
+    "/friends/change_status" : {
+      "post" : {
+        "tags" : [ "friends" ],
+        "summary" : "Chages friends approve status",
+        "operationId" : "changeStatus",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/changeStatusFriendModel"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "response"
+          }
+        }
+      }
+    },
+    "/friends/chats/{page}" : {
+      "get" : {
+        "tags" : [ "chats" ],
+        "summary" : "Returns chats list",
+        "operationId" : "friendsChatList",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "page",
+          "description" : "page number",
+          "required" : true,
+          "allowEmptyValue" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 1
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "response"
+          }
+        }
+      }
+    },
+    "/friends/{phone}/chats/{page}" : {
+      "get" : {
+        "tags" : [ "chats" ],
+        "summary" : "Returns chats list",
+        "operationId" : "friendsChat",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "phone",
+          "description" : "Friend number",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "page",
+          "description" : "Page number",
+          "required" : true,
+          "allowEmptyValue" : true,
+          "schema" : {
+            "type" : "integer",
+            "format" : "int32",
+            "default" : 1
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "response"
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "registrationModel" : {
+        "type" : "object",
+        "required" : [ "phone", "username", "name" ],
+        "properties" : {
+          "phone" : {
+            "type" : "string",
+            "example" : 799212345678
+          },
+          "username" : {
+            "type" : "string",
+            "example" : "TestUser"
+          },
+          "name" : {
+            "type" : "string",
+            "example" : "TestName"
+          }
+        }
+      },
+      "authModel" : {
+        "type" : "object",
+        "required" : [ "phone" ],
+        "properties" : {
+          "phone" : {
+            "type" : "string",
+            "example" : 799212345678
+          }
+        }
+      },
+      "checkCodeModel" : {
+        "type" : "object",
+        "required" : [ "phone_number", "verify_code", "name" ],
+        "properties" : {
+          "phone_number" : {
+            "type" : "string",
+            "example" : 799212345678
+          },
+          "verify_code" : {
+            "type" : "string",
+            "example" : 12345
+          }
+        }
+      },
+      "usersModel" : {
+        "type" : "array",
+        "items" : {
+          "type" : "string",
+          "default" : "700000000"
+        }
+      },
+      "changeStatusFriendModel" : {
+        "type" : "object",
+        "required" : [ "friend_phone", "is_approved" ],
+        "properties" : {
+          "friend_phone" : {
+            "type" : "string",
+            "example" : 799212345678
+          },
+          "is_approved" : {
+            "type" : "boolean",
+            "example" : true
+          }
+        }
+      }
+    },
+    "securitySchemes" : {
+      "bearerAuth" : {
+        "type" : "http",
+        "scheme" : "bearer",
+        "bearerFormat" : "JWT"
+      }
+    }
+  },
+  "security" : [ {
+    "bearerAuth" : [ ]
+  } ]
+}

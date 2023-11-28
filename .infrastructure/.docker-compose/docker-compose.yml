@@ -1,0 +1,51 @@
+version: '2'
+
+services:
+    nginx:
+        build:
+            context: ./nginx
+            args:
+                env: dev
+        ports:
+            - "80:80"
+        container_name: nginx
+        working_dir: /application
+        volumes_from:
+          - php_fpm
+
+    php_fpm:
+        build:
+            context: ./php-fpm
+            args:
+                env: dev
+        container_name: php-fpm
+        volumes:
+            - ../../:/application
+            - ../../var/log:/application/var/log
+            - ./php-fpm/supervisord.conf:/etc/supervisor/conf.d/supervisord.conf
+        ports:
+            - "3001:3001"
+        expose:
+            - 3001
+
+    database:
+        image: mariadb:10.4
+        container_name: database
+        working_dir: /application
+        volumes:
+            - ../.db:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: "AY3aNUMBx2R"
+            MYSQL_DATABASE: "application"
+            MYSQL_USER: "application_user"
+            MYSQL_PASSWORD: "FAYnuMPx8RN"
+        ports:
+            - "3315:3306"
+
+    redis:
+        image: bitnami/redis
+        container_name: redis
+        environment:
+            REDIS_PASSWORD: "uFQ4zYd85Xr"
+        ports:
+            - "6380:6379"
